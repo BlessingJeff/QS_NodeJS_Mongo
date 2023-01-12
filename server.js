@@ -3,8 +3,8 @@ const app = express();
 const cors = require("cors");
 const mongodb = require("mongodb");
 const mongoClient = mongodb.MongoClient;
-//const URL = "mongodb+srv://admin:admin123@cluster0.ftngj.mongodb.net?retryWrites=true&w=majority";
-const URL = "mongodb://localhost:27017";
+// const URL = "mongodb://localhost:27017";
+const URL = "mongodb+srv://blessingaslan:blessing@cluster0.vbqughv.mongodb.net/?retryWrites=true&w=majority";
 
 let usersList = [];
 app.use(express.json())
@@ -15,8 +15,8 @@ app.use(cors({
 app.get("/users", async function (req, res) {
     try {
         let connection = await mongoClient.connect(URL);
-        let db = connection.db("quicksand");
-        let users = await db.collection("data").find({}).toArray();
+        let db = connection.db("myLatest");
+        let users = await db.collection("users").find({}).toArray();
         await connection.close();
         res.json(users);
     } catch (error) {
@@ -38,11 +38,11 @@ app.post("/create-user", async function (req, res) {
         let connection = await mongoClient.connect(URL);
 
         // Select DB
-        let db = connection.db("quicksand")
+        let db = connection.db("myLatest")
 
-         // Select Collection
+        // Select Collection
         // Do any Operation
-        await db.collection("data").insertOne(req.body)
+        await db.collection("users").insertOne(req.body)
 
         // Close the connection
         await connection.close();
